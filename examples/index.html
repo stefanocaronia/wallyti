@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+	<script src="jquery-2.1.4.min.js"></script>
+	<script src="../jquery.wallyti.js"></script>
+	<script>
+		$(function(){
+			$('#container').wallyti({
+				onComplete: function(){
+					console.info("FATTO!");
+					//alert("DONE!");
+				}
+			});		
+			
+			$(window).on('load',function(){
+
+			});
+		});
+	</script>
+	<style>	
+		.wrapper {width:80%;margin: 10px auto;position:relative;}
+		#container {width:100%;border:1px solid lightgreen;margin:0;}
+		.box {border:1px solid lightgrey;padding:20px;
+		}
+	</style>
+</head>
+	<body>
+		<div class="wrapper">
+			<div id="container" wallyti-block-margin="10">
+				<div class="box"><h3>My Title</h3><p>My paragraph My paragraph My paragraph My paragraph My paragraph My paragraph </p></div>
+				<div class="box"><h3>My Title</h3><p>My paragraph My paragraph My paragraph My paragraph My paragraph My paragraph </p></div>
+				<div class="box"><h3>My Title</h3><p>My paragraph My paragraph My paragraph My paragraph My paragraph My </p></div>
+				<div class="box"><h3>My Title</h3><p>My paragraph My paragraph My paragraph My My paragraph </p></div>
+				<div class="box"><h3>My Title</h3><p>My paragraph My paragraph My paragraph </p></div>
+				<div class="box"><h3>My Title</h3><p>My paragraph My paragraph My paragraph My paragraph My paragraph My paragraph </p></div>
+				<div class="box"><h3>My Title</h3><p>My paragraph  </p></div>
+				<div class="box"><h3>My Title</h3><p>My paragraph My paragraph My paragraph My paragraph My paragraph My paragraph </p></div>
+				<div class="box"><h3>My Title</h3><p>My paragraph My paragraph My paragraph My paragraph My paragraph My </p></div>
+			</div>
+		</div>
+	</body>
+</html>
+

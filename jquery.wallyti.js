@@ -6,6 +6,7 @@
 			blockMinWidth: 240,
 			blockMargin: 35,			
 			delayOnResize: 60,
+			disableTransitions: false,
 			cssTransition: "all 0.2s ease-in-out",
 			onComplete: function(){}			
 		};
@@ -29,6 +30,7 @@
 			var colPos = [];
 			var colFit = [];
 			var blocks = [];
+			var repeat = false;
 			
 			var container = $(this);			
 			var blocks = container.children();
@@ -39,7 +41,7 @@
 			var done = false;
 			
 			var hasCssTransition = blocks.css('transition')!="all 0s ease 0s" && blocks.css('transition')!="" && blocks.css('transition').length!=0;
-			
+						
 			container.addClass('wallyti-container').css({
 				'-moz-box-sizing': 'border-box', 
 				'-webkit-box-sizing': 'border-box',
@@ -57,7 +59,7 @@
 			});	
 
 			// option css transition
-			if (options.cssTransition && numBlocks<=40) {
+			if (options.cssTransition && numBlocks<=40 && !options.disableTransitions) {
 				blocks.css({
 					'-webkit-transition': 	options.cssTransition, 
 					'-moz-transition': 		options.cssTransition, 
@@ -66,7 +68,7 @@
 				});
 				hasCssTransition = true;
 			
-			} else if (numBlocks>40) { // if
+			} else if (numBlocks>40||options.disableTransitions) { // if
 				blocks.css({
 					'-webkit-transition': 	'none', 
 					'-moz-transition': 		'none', 
@@ -82,7 +84,7 @@
 			
 			// verify if window has vertical scrollbar
 			var windowHasScrollbar=($(document).height() > $(window).height());	
-						
+			
 			// get max block width setting
 			if (container.attr('wallyti-block-max')) blockMaxWidth = parseInt(container.attr('wallyti-block-max'));
 			else blockMaxWidth=options.blockMaxWidth;
@@ -116,12 +118,12 @@
 			
 			// executed after all boxes are arranged
 			function complete() {
-/* 				if (windowHasScrollbar!=($(document).height()>$(window).height())) console.log("variazione di windowHasScrollbar");
-				if (containerWidth!=container.outerWidth()) console.log("variazione di larghezza");
- */				if (windowHasScrollbar!=($(document).height()>$(window).height()) || containerWidth!=container.outerWidth()) {
-					container.wallyti(options);	
-					return;
-				}	
+				setTimeout(function(){
+					if (windowHasScrollbar!=($(document).height()>$(window).height()) || containerWidth!=container.outerWidth()) {					
+						container.wallyti(options);
+						return;
+					}
+				},100);
 				options.onComplete(); // custom callback
 			}	
 			
@@ -150,7 +152,7 @@
 				cloned.remove();				
 				
 				// adding movement class and take it out when animation end
-				if (hasCssTransition && block.css('top')!=arrange.top && block.css('left')!=arrange.left) {// only if position is changed
+				if (hasCssTransition ) {// only if position is changed && block.css('top')!=arrange.top && block.css('left')!=arrange.left
 					block.addClass('wallyti-moving').off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend',function(e){
 						block.removeClass('wallyti-moving');
 						onMoved();
@@ -160,12 +162,14 @@
 				block.css('visibility','visible');
 				block.css(arrange);
 				
-				if (!hasCssTransition) onMoved();	
+				if (!hasCssTransition || parseInt(container.data('wallyti-executed'))!='1') 
+					onMoved();	
 				
 			});		
-			
+				
 			// set new container height
-			container.height(Math.max.apply(Math,colPos));
+			container.height(Math.max.apply(Math,colPos));			
+			container.data('wallyti-executed','1');
 							
 			$(window).off('resize.wallyti').on('resize.wallyti',function(){				
 				clearTimeout(window.resizedFinished);

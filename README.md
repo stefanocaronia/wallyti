@@ -1,4 +1,4 @@
-# jquery.wallyti (beta)
+# Wallyti (beta)
 
 *Wallyti* is a simple jQuery plugin that can be used to generate a tiled wall of blocks. It is currently in beta!
 

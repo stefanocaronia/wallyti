@@ -1,5 +1,5 @@
 (function($){
-	$.fn.wallyti = function(arguments) {	
+	$.fn.wallyti = function(args) {	
 		
 		var defaults = {
 			blockMaxWidth: 360,
@@ -13,14 +13,14 @@
 		
 		var options = {};
 		
-		if (typeof(arguments)=="function") {
+		if (typeof(args)=="function") {
 			options = $.extend(defaults, {
-				onComplete: arguments
+				onComplete: args
 			});
-		} else if (typeof(arguments)!="object") {
+		} else if (typeof(args)!="object") {
 			options=defaults;
 		} else { 
-			options = $.extend(defaults, arguments);
+			options = $.extend(defaults, args);
 		}			
 		
 		return this.each(function() {	

@@ -15,7 +15,7 @@ These values are used only to compute the number of column that can fit in the c
 
 Include script *after* the jQuery library:
 ```html
-<script src="/path/to/jquery.wallyti.js"></script>
+<script src="/path/to/jquery.wallyti.min.js"></script>
 ```
 
 Remember to not include the script directly from GitHub!

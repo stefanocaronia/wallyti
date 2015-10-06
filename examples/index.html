@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+	<title>Wallyti Example</title>
 	<script src="jquery-2.1.4.min.js"></script>
 	<script src="../jquery.wallyti.js"></script>
 	<script>
@@ -15,14 +16,15 @@
 		});
 	</script>
 	<style>	
+		body {overflow-y:scroll;font-family:Consolas;}
 		.wrapper {width:80%;margin: 10px auto;position:relative;}
 		#container {width:100%;border:1px solid lightgreen;margin:0;}
-		.box {border:1px solid lightgrey;padding:20px;
-		}
+		.box {border:1px solid lightgrey;padding:20px;background-color:rgba(0,0,120,0.4);}
 	</style>
 </head>
 	<body>
 		<div class="wrapper">
+			<h1>Wallyti example</h1>
 			<div id="container" wallyti-block-margin="10">
 				<div class="box"><h3>My Title</h3><p>My paragraph My paragraph My paragraph My paragraph My paragraph My paragraph </p></div>
 				<div class="box"><h3>My Title</h3><p>My paragraph My paragraph My paragraph My paragraph My paragraph My paragraph </p></div>

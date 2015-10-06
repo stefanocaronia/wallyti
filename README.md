@@ -1,8 +1,14 @@
 # jquery.wallyti (beta)
 
-*Wallyti* is a simple jQuery plugin that can be used to generate a tiled wall of blocks.
-The only parameters needed are the minimum block width and the maximum block width, the margin between blocks.
-These values are used only to compute the number of column and they can be forced if it is needed (in case of a single column or if the min and max values can't fit for a specific container width.
+*Wallyti* is a simple jQuery plugin that can be used to generate a tiled wall of blocks. It is currently in beta!
+
+The only parameters needed are:
+
+* the minimum block width 
+* the maximum block width 
+* the margin between blocks
+
+These values are used only to compute the number of column, and *Wallity* can override them if it is needed.
 
 
 ## Installation

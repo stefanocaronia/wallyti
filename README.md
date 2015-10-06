@@ -1,6 +1,6 @@
 # Wallyti (beta)
 
-*Wallyti* is a simple jQuery plugin that can be used to generate a tiled wall of blocks. It is currently in beta! So if you find some bugs or problems, or you have some suggestions, feel free to contribute :)
+*Wallyti* is a simple jQuery plugin that can be used to generate a tiled wall of blocks. It is currently in beta! If you find a bug or have any suggestions please let me know :)
 
 The only parameters needed are:
 

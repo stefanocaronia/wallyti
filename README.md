@@ -8,7 +8,7 @@ The only parameters needed are:
 * the maximum block width 
 * the margin between blocks
 
-These values are used only to compute the number of column, and *Wallity* can override them if it is needed.
+These values are used only to compute the number of column that can fit in the container width, and *Wallity* can override them if it is needed.
 
 
 ## Installation
@@ -18,7 +18,7 @@ Include script *after* the jQuery library:
 <script src="/path/to/jquery.wallyti.js"></script>
 ```
 
-Do not include the script directly from GitHub.
+Remember to not include the script directly from GitHub!
 
 ##Options:
 
@@ -38,23 +38,25 @@ The above values can also be set using attributes on the container's tag:
 
 * **delayOnResize** - milleseconds to wait for the window to be resized
 * **disableTransitions** - disable all css transitions 
-* **cssTransition** - css style for attribute transitions applied to the blocks
+* **cssTransition** - css style for attribute transitions applied to the blocks (es. "all .25s ease-in-out")
 * **onComplete** - callback function to execute everytime all blocks are arranged
 
 The css transition can be set also directly in the stylesheet, in the usual way:
 
 ```css
 	.box {
-		 transition:         opacity .25s ease-in-out;
-		 -webkit-transition: opacity .25s ease-in-out;
-		 -moz-transition:    opacity .25s ease-in-out;
-		 -o-transition:      opacity .25s ease-in-out;
+		 transition:         all .25s ease-in-out;
+		 -webkit-transition: all .25s ease-in-out;
+		 -moz-transition:    all .25s ease-in-out;
+		 -o-transition:      all .25s ease-in-out;
 	}
 ```
 
 ##Usage:
 
-You can initialize *Wallyti* the plugin in document ready or in body onload. Here are some examples:
+You can initialize *Wallyti* in the document ready or in body onload. The plugin will initialize and run every time the method is called.
+
+NB: Once initialized, it is automatically attached to the window resize event, so there's no need to do this yourself.
 	
 ```javascript
 	$(function(){
@@ -102,7 +104,6 @@ There is no specific css needed, you're free to customize container and blocks.
 		width:80%;
 	}
 	
-	/* this
 	.myBox {
 		transition:         opacity .25s ease-in-out;
 		 -webkit-transition: opacity .25s ease-in-out;
@@ -116,7 +117,7 @@ There is no specific css needed, you're free to customize container and blocks.
 	}
 ```
 
-The html is very simple (class myBox is not needed for the plugin to work)
+The html is very simple (class "myBox" is not needed for the plugin to work)
 
 ```html
 <div id="container" wallyti-block-margin="10">

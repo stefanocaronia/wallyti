@@ -5,11 +5,8 @@
 	<script src="../jquery.wallyti.js"></script>
 	<script>
 		$(function(){
-			$('#container').wallyti({
-				onComplete: function(){
-					console.info("FATTO!");
-					//alert("DONE!");
-				}
+			$('#container').wallyti(function(){
+				console.info("FATTO!");
 			});		
 			
 			$(window).on('load',function(){

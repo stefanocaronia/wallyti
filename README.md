@@ -28,7 +28,7 @@ Remember to not include the script directly from GitHub!
 The above values can also be set using attributes on the container's tag:
 
 ```html
-<div id="container" 
+<div id="myContainer" 
 	wallyti-block-max="300" 
 	wallyti-block-min="210"
 	wallyti-block-margin="20" >
@@ -61,10 +61,10 @@ Once initialized, it is automatically attached to the window resize event, so th
 	$(function(){
 		
 		/* with the default parameters:	*/
-		$('#container').wallyti();
+		$('#myContainer').wallyti();
 		
 		/* setting margin and a callback function */
-		$('#container').wallyti({
+		$('#myContainer').wallyti({
 			blockMargin: 30,
 			onComplete: function(){
 				// DO STUFF
@@ -72,12 +72,12 @@ Once initialized, it is automatically attached to the window resize event, so th
 		});
 		
 		/* only callback function */
-		$('#container').wallyti(function(){
+		$('#myContainer').wallyti(function(){
 			// DO STUFF
 		});
 		
 		/* setting up a transitions */
-		$('#container').wallyti({
+		$('#myContainer').wallyti({
 			cssTransition: "all 1s ease-in-out",
 			disableTransitions: Modernizr.touch  // disable transitions on touch devices
 		});
@@ -90,7 +90,7 @@ There is no specific css needed, you're free to customize container and blocks.
 The class 'wallity-moving' will be added to the block *while* they are moving.
 
 ```css
-	#container {
+	#myContainer {
 		width:80%;
 	}
 	
@@ -110,7 +110,7 @@ The class 'wallity-moving' will be added to the block *while* they are moving.
 The html is very simple (class "myBox" is not needed for the plugin to work)
 
 ```html
-<div id="container" wallyti-block-margin="10">
+<div id="myContainer" wallyti-block-margin="10">
 	<div class="myBox"></div>
 	<div class="myBox"></div>
 	<div class="myBox"></div>

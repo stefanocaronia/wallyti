@@ -37,7 +37,7 @@ The above values can also be set using attributes on the container's tag:
 
 * **delayOnResize** - (default: 60) milleseconds to wait for the window to be resized
 * **disableTransitions** - (default: false) disable all css transitions 
-* **cssTransition** - (default: 'all 0.2s ease-in-out') css style for attribute transitions applied to the blocks (es. "all .25s ease-in-out")
+* **cssTransition** - (default: 'all 0.2s ease-in-out') css style for attribute transitions applied to the blocks
 * **onComplete** - callback function to execute everytime all blocks are arranged
 
 The css transition can be set also directly in the stylesheet, in the usual way:

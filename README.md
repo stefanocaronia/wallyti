@@ -4,9 +4,9 @@
 
 The plugin uses these values to compute the number of column that can fit in the container width: 
 
-* the **minimum block width**
-* the **maximum block width** 
-* the **margin between blocks**
+* the *minimum block width*
+* the *maximum block width*
+* the *margin between blocks*
 
 These values  are intended to give the script some "boundaries" to find how many columns there should be. 
 *Wallity* can override maximum and minimum block widths if it's needed. This happens when:

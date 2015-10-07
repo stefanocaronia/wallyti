@@ -60,10 +60,10 @@ Once initialized, it is automatically attached to the window resize event, so th
 ```javascript
 	$(function(){
 		
-		/* with the default parameters:	*/
+		/* initialize with  default parameters	*/
 		$('#myContainer').wallyti();
 		
-		/* setting margin and a callback function */
+		/* initialize with margin and a callback function */
 		$('#myContainer').wallyti({
 			blockMargin: 30,
 			onComplete: function(){
@@ -71,23 +71,25 @@ Once initialized, it is automatically attached to the window resize event, so th
 			}
 		});
 		
-		/* only callback function */
+		/* initialize only with callback function */
 		$('#myContainer').wallyti(function(){
 			// DO STUFF
 		});
 		
-		/* setting up a transitions */
+		/* initialize with a transitions and widths */
 		$('#myContainer').wallyti({
+			blockMaxWidth: 100,
+			blockMinWidth: 60,
+			blockMargin:5,
 			cssTransition: "all 1s ease-in-out",
 			disableTransitions: Modernizr.touch  // disable transitions on touch devices
 		});
-		
 	});
 ```
 
 There is no specific css needed, you're free to customize container and blocks.
-*Wallyti* will set the necessary attributes, for example box-sizing and position will be overwritten by the plugin script.
-The class 'wallity-moving' will be added to the block *while* they are moving.
+*Wallyti* will set the necessary attributes, for example *box-sizing* and *position* will be overwritten by the plugin script.
+The class '*wallity-moving*' will be added to the block *while* they are moving.
 
 ```css
 	#myContainer {
@@ -107,10 +109,10 @@ The class 'wallity-moving' will be added to the block *while* they are moving.
 	}
 ```
 
-The html is very simple (class "myBox" is not needed for the plugin to work)
+The html is very simple:
 
 ```html
-<div id="myContainer" wallyti-block-margin="10">
+<div id="myContainer" wallyti-block-margin="10" wallyti-block-min="200">
 	<div class="myBox"></div>
 	<div class="myBox"></div>
 	<div class="myBox"></div>

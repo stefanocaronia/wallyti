@@ -13,11 +13,7 @@
 		
 		var options = {};
 		
-		if (typeof(args)=="function") {
-			options = $.extend(defaults, {
-				onComplete: args
-			});
-		} else if (typeof(args)!="object") {
+		if (typeof(args)!="object") {
 			options=defaults;
 		} else { 
 			options = $.extend(defaults, args);
@@ -30,21 +26,23 @@
 			var blockMargin;
 			var blockMaxWidth;
 			var blockMinWidth;
+			var colCount = 1;			
 			var colPos = [];
 			var colFit = [];
 			var blocks = [];
+			var repeat = false;
 			
-			var colCount = 1;		
 			var container = $(this);			
-			var blocks = container.children();			
-			var numBlocks = blocks.length;			
+			var blocks = container.children();
+			
+			var numBlocks = blocks.length;
+			if (!numBlocks) return;
+			
 			var blocksToMove = numBlocks;
 			var done = false;
 			
-			// check if blocks has css transitions
 			var hasCssTransition = blocks.css('transition')!="all 0s ease 0s" && blocks.css('transition')!="" && blocks.css('transition').length!=0;
-			
-			// css for container			
+						
 			container.addClass('wallyti-container').css({
 				'-moz-box-sizing': 'border-box', 
 				'-webkit-box-sizing': 'border-box',
@@ -53,7 +51,6 @@
 				'padding': '0' 
 			});
 			
-			// css for blocks
 			blocks.addClass('wallyti-block').css({
 				'-moz-box-sizing': 'border-box', 
 				'-webkit-box-sizing': 'border-box',
@@ -71,14 +68,15 @@
 					'transition':			options.cssTransition
 				});
 				hasCssTransition = true;
-				
-			} else if (numBlocks>40||options.disableTransitions) { // too many blocks, disbling css transitions
+			
+			} else if (numBlocks>40||options.disableTransitions) { // if
 				blocks.css({
 					'-webkit-transition': 	'none', 
 					'-moz-transition': 		'none', 
 					'-o-transition': 		'none', 
 					'transition':			'none'
 				});
+				options.jsTransition = false;
 				hasCssTransition = false;
 			}	
 						
@@ -98,6 +96,7 @@
 			
 			// get margin setting
 			if (container.attr('wallyti-block-margin')) blockMargin = parseInt(container.attr('wallyti-block-margin'));
+			else if (blocks.css('margin-right')) blockMargin = parseInt(blocks.css('margin-right'));
 			else blockMargin=options.blockMargin;
 			
 			// col num from wich to start
@@ -119,7 +118,7 @@
 			// initialize columns array
 			for (c=0;c<colCount;c++) colPos[c]=0;
 			
-			// executed after all boxes are newPositiond
+			// executed after all boxes are arranged
 			function complete() {
 				setTimeout(function(){
 					if (windowHasScrollbar!=($(document).height()>$(window).height()) || containerWidth!=container.outerWidth()) {					
@@ -130,8 +129,8 @@
 				options.onComplete(); // custom callback
 			}	
 			
-			// executed every box positioning
-			function onBlockMoved() {
+			// executed every box arranged
+			function onMoved() {
 				if (done) return;
 				done=(--blocksToMove==0);
 				if (done) complete();
@@ -142,40 +141,38 @@
 				var block = $(this);
 				var blockHeight;				
 				var column = ( colCount > 1 ? colPos.indexOf(Math.min.apply(Math,colPos)) : 0);	
-				var newPosition = {					
+				var arrange = {					
 					top: colPos[column],
 					left: ( (column*colWidth)>=0 ? column*colWidth : 0 ),				
 					width: blockWidth
 				}	
-				
-				// clone box
+								
 				cloned = block.clone();				
-				cloned.css(newPosition).css("visibility","hidden").addClass("cloned").appendTo(container);								
+				cloned.css(arrange).css("visibility","hidden").addClass("cloned").appendTo(container);								
 				blockHeight=cloned.outerHeight();
 				colPos[column]+=blockHeight+blockMargin;					
 				cloned.remove();				
 				
 				// adding movement class and take it out when animation end
-				if (hasCssTransition && block.css('top')!=newPosition.top && block.css('left')!=newPosition.left) {// only if position is changed 
+				if (hasCssTransition ) {// only if position is changed && block.css('top')!=arrange.top && block.css('left')!=arrange.left
 					block.addClass('wallyti-moving').off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend',function(e){
 						block.removeClass('wallyti-moving');
-						onBlockMoved();
+						onMoved();
 					});	
 				}
 				
-				// moving the real block
 				block.css('visibility','visible');
-				block.css(newPosition);
+				block.css(arrange);
 				
-				// in there is no transition or it is first load
 				if (!hasCssTransition || parseInt(container.data('wallyti-executed'))!='1') 
-					onBlockMoved();					
+					onMoved();	
+				
 			});		
 				
 			// set new container height
-			container.height(Math.max.apply(Math,colPos));	
+			container.height(Math.max.apply(Math,colPos));			
+			container.data('wallyti-executed','1');
 							
-			// setup resize event
 			$(window).off('resize.wallyti').on('resize.wallyti',function(){				
 				clearTimeout(window.resizedFinished);
 				window.resizedFinished = setTimeout(function(){
@@ -185,7 +182,6 @@
 				}, options.delayOnResize);				
 			});
 			
-			container.data('wallyti-executed','1');
 		});
 	}	
 }) (jQuery);

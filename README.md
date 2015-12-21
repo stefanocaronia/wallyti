@@ -1,15 +1,20 @@
 # Wallyti (beta)
 
-*Wallyti* is a simple jQuery plugin that can be used to generate a tiled wall of blocks. It is currently in beta! If you find a bug or have any suggestions please let me know :)
+*Wallyti* is a simple jQuery plugin that can be used to generate a wall of tiled blocks. It is currently in beta! If you find a bug or have any suggestions please let me know.
 
-The only parameters needed are:
+The plugin uses these values to compute the number of column that can fit in the container width: 
 
-* the minimum block width 
-* the maximum block width 
-* the margin between blocks
+* the *minimum block width*
+* the *maximum block width*
+* the *margin between blocks*
 
-These values are used only to compute the number of column that can fit in the container width, and *Wallity* can override them if it is needed.
+These values  are intended to give the script some "boundaries" to find how many columns there should be. 
+*Wallity* can override maximum and minimum block widths if it's needed. This happens when:
 
+* there is only one column: the width of the block will *always* be 100%,
+* there's no column number for blocks to fit in the container width: the script will make them fit someway :)
+
+However the margin will never change.
 
 ## Installation
 
@@ -22,23 +27,23 @@ Remember to not include the script directly from GitHub!
 
 ##Options:
 
-* **blockMaxWidth** - sets the maximum width of the single block (in pixels)
-* **blockMinWidth** - sets the minimum width of the single block (in pixels)
-* **blockMargin** - sets the margin between the block (in pixels)
+* **blockMaxWidth** - (default: 360) sets the maximum width of the single block (in pixels)
+* **blockMinWidth** - (default: 240) sets the minimum width of the single block (in pixels)
+* **blockMargin** - (default: 35) sets the margin between the block (in pixels)
 
 The above values can also be set using attributes on the container's tag:
 
 ```html
-<div id="container" 
+<div id="myContainer" 
 	wallyti-block-max="300" 
 	wallyti-block-min="210"
 	wallyti-block-margin="20" >
 </div>
 ```
 
-* **delayOnResize** - milleseconds to wait for the window to be resized
-* **disableTransitions** - disable all css transitions 
-* **cssTransition** - css style for attribute transitions applied to the blocks (es. "all .25s ease-in-out")
+* **delayOnResize** - (default: 60) milleseconds to wait for the window to be resized
+* **disableTransitions** - (default: false) disable all css transitions 
+* **cssTransition** - (default: 'all 0.2s ease-in-out') css style for attribute transitions applied to the blocks
 * **onComplete** - callback function to execute everytime all blocks are arranged
 
 The css transition can be set also directly in the stylesheet, in the usual way:
@@ -54,53 +59,46 @@ The css transition can be set also directly in the stylesheet, in the usual way:
 
 ##Usage:
 
-You can initialize *Wallyti* in the document ready or in body onload. The plugin will initialize and run every time the method is called.
+You can call *Wallyti* in document.ready or in body.onload. It will initialize and run every time the method is called.
 
-NB: Once initialized, it is automatically attached to the window resize event, so there's no need to do this yourself.
+Once initialized, it is automatically attached to the window resize event, so there's no need to do this yourself.
 	
 ```javascript
 	$(function(){
 		
-		/* with the default parameters:
-			blockMaxWidth: 360,
-			blockMinWidth: 240,
-			blockMargin: 35,			
-			delayOnResize: 60,
-			disableTransitions: false,
-			cssTransition: "all 0.2s ease-in-out",
-		*/
-		$('#container').wallyti();
+		/* initialize with  default parameters	*/
+		$('#myContainer').wallyti();
 		
-		/* setting margin and a callback function 
-		*/
-		$('#container').wallyti({
+		/* initialize with margin and a callback function */
+		$('#myContainer').wallyti({
 			blockMargin: 30,
 			onComplete: function(){
 				// DO STUFF
 			}
 		});
 		
-		/* only callback function 
-		*/
-		$('#container').wallyti(function(){
+		/* initialize only with callback function */
+		$('#myContainer').wallyti(function(){
 			// DO STUFF
 		});
 		
-		/* setting up a transitions 
-		*/
-		$('#container').wallyti({
+		/* initialize with a transitions and widths */
+		$('#myContainer').wallyti({
+			blockMaxWidth: 100,
+			blockMinWidth: 60,
+			blockMargin:5,
 			cssTransition: "all 1s ease-in-out",
 			disableTransitions: Modernizr.touch  // disable transitions on touch devices
 		});
-		
 	});
 ```
 
-There is no specific css needed, you're free to customize container and blocks. 
-*Wallyti* will set the necessary attributes, for example box-sizing and position will be overwritten by the plugin script.
+There is no specific css needed, you're free to customize container and blocks.
+*Wallyti* will set the necessary attributes, for example *box-sizing* and *position* will be overwritten by the plugin script.
+The class '*wallity-moving*' will be added to the block *while* they are moving.
 
 ```css
-	#container {
+	#myContainer {
 		width:80%;
 	}
 	
@@ -117,10 +115,10 @@ There is no specific css needed, you're free to customize container and blocks.
 	}
 ```
 
-The html is very simple (class "myBox" is not needed for the plugin to work)
+The html is very simple:
 
 ```html
-<div id="container" wallyti-block-margin="10">
+<div id="myContainer" wallyti-block-margin="10" wallyti-block-min="200">
 	<div class="myBox"></div>
 	<div class="myBox"></div>
 	<div class="myBox"></div>
